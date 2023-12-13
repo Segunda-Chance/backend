@@ -13,7 +13,7 @@ import jakarta.validation.constraints.Size;
 @Table(name = "tb_categorias")
 public class Categoria {
 	
-	@Id // Primary Key
+	@Id // Primary Key //
     @GeneratedValue(strategy = GenerationType.IDENTITY) // AUTO_INCREMENT
     private Long id;
 
