@@ -50,8 +50,4 @@ public class Categoria {
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-<<<<<<< HEAD
-=======
-    
->>>>>>> 816f4163240a31ad0a1e3c16e2a9ff2a15aea9a1
 }
