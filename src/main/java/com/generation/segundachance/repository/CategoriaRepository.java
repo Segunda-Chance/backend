@@ -9,7 +9,7 @@ import com.generation.segundachance.model.Categoria;
 
 public interface CategoriaRepository extends JpaRepository<Categoria, Long>{
 	
-List<Categoria> findAllByNome_categoriaContainingIgnoreCase(@Param("nome_categoria") String nome_categoria);
+List<Categoria> findAllByNomeCategoriaContainingIgnoreCase(@Param("nomeCategoria") String nomeCategoria);
 	
 	//SELECT * FROM tb_categoria WHERE titulo LIKE "%?%";
 
