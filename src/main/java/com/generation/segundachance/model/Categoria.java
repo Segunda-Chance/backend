@@ -24,7 +24,7 @@ public class Categoria {
 
     @Column(length = 50)
     @NotBlank(message = "O Atributo tipo é obrigatório!")
-    @Size(min = 10, max = 50, message="O Atributo tipo deve conter no mínimo 10 e no máximo 50 caracteres.")
+    @Size(min = 5, max = 50, message="O Atributo tipo deve conter no mínimo 10 e no máximo 50 caracteres.")
     private String tipo;
 
 	public Long getId() {
