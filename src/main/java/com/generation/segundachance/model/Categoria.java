@@ -51,5 +51,4 @@ public class Categoria {
 		this.tipo = tipo;
 	}
     
-    
 }

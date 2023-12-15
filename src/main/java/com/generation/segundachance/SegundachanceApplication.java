@@ -9,5 +9,4 @@ public class SegundachanceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SegundachanceApplication.class, args);
 	}
-
 }

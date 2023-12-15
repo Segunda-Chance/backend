@@ -82,4 +82,6 @@ public class CategoriaController {
 		
 		// DELETE FROM tb_categoria WHERE id = ?;
 	}
+	
+
 }

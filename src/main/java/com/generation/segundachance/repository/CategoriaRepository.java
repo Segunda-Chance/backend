@@ -14,4 +14,5 @@ List<Categoria> findAllByTipoContainingIgnoreCase(@Param("tipo") String tipo);
 	
 	//SELECT * FROM tb_categoria WHERE titulo LIKE "%?%";
 
+
 }
