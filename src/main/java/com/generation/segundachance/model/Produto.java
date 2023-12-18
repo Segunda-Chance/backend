@@ -22,13 +22,13 @@ import jakarta.validation.constraints.Size;
 public class Produto {
 
 	@Id // Primary Key
-	@GeneratedValue(strategy = GenerationType.IDENTITY) // AUTO_INCREMENT
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@Column(length = 50)
 	@NotBlank(message = "O Atributo nome é obrigatório!")
 	@Size(min = 5, max = 50, message = "O Atributo nome deve conter no mínimo 5 e no máximo 50 caracteres.")
-	private String nome_produto;
+	private String nomeProduto;
 
 	@NotNull(message = "Digite o preço!")
 	@DecimalMin(value = "0.1", inclusive = true)
@@ -60,12 +60,12 @@ public class Produto {
 		this.id = id;
 	}
 
-	public String getNome_produto() {
-		return nome_produto;
+	public String getNomProduto() {
+		return nomeProduto;
 	}
 
-	public void setNome_produto(String nome_produto) {
-		this.nome_produto = nome_produto;
+	public void setNome_produto(String nomeProduto) {
+		this.nomeProduto = nomeProduto;
 	}
 
 	public BigDecimal getPreco() {
