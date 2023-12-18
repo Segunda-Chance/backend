@@ -50,7 +50,7 @@ public class Categoria {
 		return nomeCategoria;
 	}
 
-	public void setNome_categoria(String nomeCategoria) {
+	public void setNomeCategoria(String nomeCategoria) {
 		this.nomeCategoria = nomeCategoria;
 	}
 
@@ -61,4 +61,5 @@ public class Categoria {
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
+	
 }

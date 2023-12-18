@@ -10,7 +10,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Digits;
@@ -49,9 +48,9 @@ public class Produto {
 	@JsonIgnoreProperties("produtos")
 	private Categoria categoria;
 	
-	/*@OneToMany
+	@ManyToOne
 	@JsonIgnoreProperties("usuarios")
-	private Usuario usuario;*/
+	private Usuario usuario;
 
 	public Long getId() {
 		return id;
@@ -100,5 +99,12 @@ public class Produto {
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
-	
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 }

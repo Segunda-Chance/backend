@@ -39,9 +39,9 @@ public class Usuario {
 	@Size(min = 5, max = 255, message = "O Atributo senha deve conter no mínimo 5.")
 	private String senha;
 
-	/*@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario", cascade = CascadeType.REMOVE)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario", cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties("usuario")
-	private List<Produto> produtos;*/
+	private List<Produto> produtos;
 
 	public Long getId() {
 		return id;
@@ -75,4 +75,11 @@ public class Usuario {
 		this.senha = senha;
 	}
 
+	public List<Produto> getProdutos() {
+		return produtos;
+	}
+
+	public void setProdutos(List<Produto> produtos) {
+		this.produtos = produtos;
+	}
 }
