@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.generation.segundachance.model.Produto;
+import com.generation.segundachance.repository.CategoriaRepository;
 import com.generation.segundachance.repository.ProdutoRepository;
 
 import jakarta.validation.Valid;
@@ -28,6 +29,9 @@ import jakarta.validation.Valid;
 public class ProdutoController{
 	@Autowired
 	private ProdutoRepository produtoRepository;
+	
+	@Autowired
+	private CategoriaRepository categoriaRepository;
 	
 	//Metodo para realizar o cadastro de um Produto
 			@PostMapping
@@ -62,7 +66,7 @@ public class ProdutoController{
 	// Metodo para cadastrar produto
 		public ResponseEntity<Produto> put(@Valid @RequestBody Produto produto) {
 			if(produtoRepository.existsById(produto.getId())) {
-				if(produtoRepository.existsById(produto.getCategoria().getId()))
+				if(categoriaRepository.existsById(produto.getCategoria().getId()))
 					return ResponseEntity.status(HttpStatus.OK)
 							.body(produtoRepository.save(produto));
 				
