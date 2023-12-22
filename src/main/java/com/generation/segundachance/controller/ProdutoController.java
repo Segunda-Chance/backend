@@ -36,7 +36,7 @@ public class ProdutoController{
 	//Metodo para realizar o cadastro de um Produto
 			@PostMapping
 			public ResponseEntity<Produto> post (@Valid @RequestBody Produto produto){
-				if(produtoRepository.existsById(produto.getCategoria().getId())) {
+				if(categoriaRepository.existsById(produto.getCategoria().getId())) {
 					return ResponseEntity.status(HttpStatus.CREATED)
 							.body(produtoRepository.save(produto)); 
 				}
