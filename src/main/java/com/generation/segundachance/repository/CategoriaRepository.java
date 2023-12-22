@@ -8,9 +8,6 @@ import org.springframework.data.repository.query.Param;
 import com.generation.segundachance.model.Categoria;
 
 public interface CategoriaRepository extends JpaRepository<Categoria, Long>{
-	
-List<Categoria> findAllByNome_categoriaContainingIgnoreCase(@Param("titulo") String titulo);
-	
-	//SELECT * FROM tb_categoria WHERE titulo LIKE "%?%";
-
+	public List<Categoria> findAllByNomeCategoriaContainingIgnoreCase(@Param("nomeCategoria") String nomeCategoria);
+	public List<Categoria> findAllByTipoContainingIgnoreCase(@Param("tipo") String tipo);
 }
