@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.generation.segundachance.model.UsuarioLogin;
 import com.generation.segundachance.model.Usuario;
+import com.generation.segundachance.model.UsuarioLogin;
 import com.generation.segundachance.repository.UsuarioRepository;
 import com.generation.segundachance.service.UsuarioService;
 

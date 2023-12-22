@@ -10,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
 import com.generation.segundachance.model.Usuario;
 import com.generation.segundachance.model.UsuarioLogin;
 import com.generation.segundachance.repository.UsuarioRepository;
