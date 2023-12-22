@@ -17,6 +17,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import com.generation.segundachance.repository.CategoriaRepository;
+
 @Entity
 @Table(name = "tb_produtos")
 public class Produto {
@@ -60,11 +62,11 @@ public class Produto {
 		this.id = id;
 	}
 
-	public String getNomProduto() {
+	public String getNomeProduto() {
 		return nomeProduto;
 	}
 
-	public void setNome_produto(String nomeProduto) {
+	public void setNomeProduto(String nomeProduto) {
 		this.nomeProduto = nomeProduto;
 	}
 

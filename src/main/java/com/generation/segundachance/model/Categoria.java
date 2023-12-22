@@ -16,6 +16,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+import com.generation.segundachance.repository.CategoriaRepository;
 @Entity
 @Table(name = "tb_categorias")
 public class Categoria {
