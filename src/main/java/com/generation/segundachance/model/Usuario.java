@@ -36,7 +36,7 @@ public class Usuario {
 
 	@Column(length = 255)
 	@NotBlank(message = "O Atributo senha é obrigatório!")
-	@Size(min = 5, max = 255, message = "O Atributo senha deve conter no mínimo 5.")
+	@Size(min = 8, max = 255, message = "O Atributo senha deve conter no mínimo 8.")
 	private String senha;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario", cascade = CascadeType.REMOVE)
