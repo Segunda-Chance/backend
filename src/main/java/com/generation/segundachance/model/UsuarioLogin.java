@@ -3,7 +3,7 @@ package com.generation.segundachance.model;
 public class UsuarioLogin {
 	
 	private Long id;
-	private String nome;
+	private String nomeUsuario;
 	private String usuario;
 	private String senha;
 	private String token;
@@ -16,12 +16,12 @@ public class UsuarioLogin {
 		this.id = id;
 	}
 
-	public String getNome() {
-		return this.nome;
+	public String getNomeUsuario() {
+		return this.nomeUsuario;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setNomeUsuario(String nomeUsuario) {
+		this.nomeUsuario = nomeUsuario;
 	}
 
 	public String getUsuario() {

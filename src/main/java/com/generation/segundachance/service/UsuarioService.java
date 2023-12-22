@@ -45,7 +45,7 @@ public class UsuarioService {
 			Optional<Usuario> usuario = usuarioRepository.findByUsuario(usuarioLogin.get().getUsuario());
 			if (usuario.isPresent()) {
 				usuarioLogin.get().setId(usuario.get().getId());
-				usuarioLogin.get().setNome(usuario.get().getNome_usuario());
+				usuarioLogin.get().setNomeUsuario(usuario.get().getNomeUsuario());
 				usuarioLogin.get().setSenha("");
 				usuarioLogin.get().setToken(gerarToken(usuarioLogin.get().getUsuario()));
 

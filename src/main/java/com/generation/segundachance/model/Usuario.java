@@ -27,7 +27,7 @@ public class Usuario {
 	@Column(length = 30)
 	@NotBlank(message = "O Atributo nome é obrigatório!")
 	@Size(min = 5, max = 30, message = "O Atributo nome deve conter no mínimo 5 e no máximo 30 caracteres.")
-	private String nome_usuario;
+	private String nomeUsuario;
 
 	@Column(length = 50)
 	@NotBlank(message = "O Atributo usuario é obrigatório!")
@@ -51,12 +51,13 @@ public class Usuario {
 		this.id = id;
 	}
 
-	public String getNome_usuario() {
-		return nome_usuario;
+
+	public String getNomeUsuario() {
+		return nomeUsuario;
 	}
 
-	public void setNome_usuario(String nome_usuario) {
-		this.nome_usuario = nome_usuario;
+	public void setNomeUsuario(String nomeUsuario) {
+		this.nomeUsuario = nomeUsuario;
 	}
 
 	public String getUsuario() {
