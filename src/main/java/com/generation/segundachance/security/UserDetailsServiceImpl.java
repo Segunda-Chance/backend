@@ -28,6 +28,5 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			return new UserDetailsImpl(buscaUsuario.get());
 		else
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
-
 	}
 }
