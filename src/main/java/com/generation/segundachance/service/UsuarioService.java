@@ -71,9 +71,9 @@ public class UsuarioService {
 
 		if (usuarioRepository.findById(usuario.getId()).isPresent()) {
 			Optional<Usuario> buscaUsuario = usuarioRepository.findByUsuario(usuario.getUsuario());
-			if ((buscaUsuario.isPresent()) && (buscaUsuario.get().getId() != usuario.getId())) {
+			if ((buscaUsuario.isPresent()) && (buscaUsuario.get().getId() != usuario.getId())) 
 				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuário já existe!", null);
-			}
+			
 			
 			if(usuario.getFoto().isBlank())
 		         usuario.setFoto("https://i.imgur.com/I8MfmC8.png");
