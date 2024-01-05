@@ -12,12 +12,12 @@ public class UserDetailsImpl implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
 
-	private String userName;
+	private String usuario;
 	private String password;
 	private List<GrantedAuthority> authorities;
 
 	public UserDetailsImpl(Usuario user) {
-		this.userName = user.getUsuario();
+		this.usuario = user.getUsuario();
 		this.password = user.getSenha();
 	}
 
@@ -39,7 +39,7 @@ public class UserDetailsImpl implements UserDetails {
 	@Override
 	public String getUsername() {
 
-		return userName;
+		return usuario;
 	}
 
 	@Override
