@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -30,6 +31,7 @@ public class Usuario {
 	private String nomeUsuario;
 
 	@Column(length = 50)
+	@Schema(example = "email@email.com.br")
 	@NotBlank(message = "O Atributo usuario é obrigatório!")
 	@Size(min = 5, max = 50, message = "O Atributo usuario deve conter no mínimo 5 e no máximo 50 caracteres.")
 	private String usuario;
