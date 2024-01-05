@@ -64,7 +64,7 @@ public class ProdutoController{
 			return ResponseEntity.ok(produtoRepository.findAllByNomeProdutoContainingIgnoreCase(nomeProduto));
 		}
 		
-	// Metodo para cadastrar produto
+	// Metodo para atualizar produto
 		@PutMapping
 		public ResponseEntity<Produto> put(@Valid @RequestBody Produto produto) {
 			if(produtoRepository.existsById(produto.getId())) {
