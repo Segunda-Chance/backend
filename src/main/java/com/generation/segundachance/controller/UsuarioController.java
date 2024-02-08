@@ -20,6 +20,7 @@ import com.generation.segundachance.model.UsuarioLogin;
 import com.generation.segundachance.repository.UsuarioRepository;
 import com.generation.segundachance.service.UsuarioService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 @RestController
@@ -72,11 +73,16 @@ public class UsuarioController {
 	}
 
 	@PutMapping("/atualizar")
-	public ResponseEntity<Usuario> put(@Valid @RequestBody Usuario usuario) {
+	public ResponseEntity<Usuario> put(@Valid @RequestBody Usuario usuario, HttpServletRequest request) {
 		
-		return usuarioService.atualizarUsuario(usuario)
-			.map(resposta -> ResponseEntity.status(HttpStatus.OK).body(resposta))
-			.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+		String userEmail = (String) request.getAttribute("userName");
+		Optional<Usuario> requestingUser = usuarioRepository.findByUsuario(userEmail);
 		
+		if(requestingUser.get().getId() == usuario.getId())
+			return usuarioService.atualizarUsuario(usuario)
+				.map(resposta -> ResponseEntity.status(HttpStatus.OK).body(resposta))
+				.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+		
+		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	}
 }
