@@ -20,8 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.generation.segundachance.model.Produto;
+import com.generation.segundachance.model.Usuario;
 import com.generation.segundachance.repository.CategoriaRepository;
 import com.generation.segundachance.repository.ProdutoRepository;
+import com.generation.segundachance.repository.UsuarioRepository;
 import com.generation.segundachance.service.ProdutoService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,14 +33,15 @@ import jakarta.validation.Valid;
 @RequestMapping("/produto")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ProdutoController{
+	
 	@Autowired
 	private ProdutoRepository produtoRepository;
-	
 	@Autowired
 	private CategoriaRepository categoriaRepository;
-	
 	@Autowired
 	private ProdutoService productService;
+	@Autowired 
+	private UsuarioRepository userRepository;
 	
 	@PostMapping
 	public ResponseEntity<?> post (@Valid @RequestBody Produto product, HttpServletRequest request){
@@ -62,25 +65,34 @@ public class ProdutoController{
 				.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
 	}
 	
-		@GetMapping("/nomeProduto/{nomeProduto}")
-		public ResponseEntity<List<Produto>> getByNomeCategoria(@PathVariable String nomeProduto){
-			return ResponseEntity.ok(produtoRepository.findAllByNomeProdutoContainingIgnoreCase(nomeProduto));
-		}
+	@GetMapping("/nomeProduto/{nomeProduto}")
+	public ResponseEntity<List<Produto>> getByNomeCategoria(@PathVariable String nomeProduto){
+		return ResponseEntity.ok(produtoRepository.findAllByNomeProdutoContainingIgnoreCase(nomeProduto));
+	}
+	
+	@PutMapping
+	public ResponseEntity<?> put(@Valid @RequestBody Produto product, HttpServletRequest request) {
 		
-		@PreAuthorize("@projectAuthorizationService.canUpdateProject(authentication, #id)")
-		@PutMapping
-		public ResponseEntity<Produto> put(@Valid @RequestBody Produto produto) {
-			if(produtoRepository.existsById(produto.getId())) {
-				if(categoriaRepository.existsById(produto.getCategoria().getId()))
-					return ResponseEntity.status(HttpStatus.OK)
-							.body(produtoRepository.save(produto));
-				
-				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Categoria não existe!", null);
-			}
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-		}
+		// return the email sent in the header by JwtAuthFilter configuration "SetAuthentication"
+		String userEmail = (String) request.getAttribute("userName");
+		Optional<Usuario> user = userRepository.findByUsuario(userEmail);
+	    Optional<Produto> productOpt = produtoRepository.findById(product.getId());
+	    
+	    if(user.isPresent()) {
+	    	List<Produto> userProducts = user.get().getProdutos();
+	    	
+	    	if (userProducts.stream().anyMatch(p -> p.getId().equals(productOpt.get().getId())))
+	    		return ResponseEntity.ok(productService.updateProduct(product, userEmail));
+	    	else
+		    	return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuário não autorizado para atualizar o produto");
+		    	
+	    }else {
+		    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro interno do servidor ao atualizar o produto"); 	   
+	    }
+	    
+	}
 		
-		@PreAuthorize("@projectAuthorizationService.canDeleteProject(authentication, #id)")
+		@PreAuthorize("@productAuthorizationService.canDeleteProduct(authentication, #id)")
 		@ResponseStatus(HttpStatus.NO_CONTENT)
 		@DeleteMapping("/{id}")
 		public void delete(@PathVariable Long id) {

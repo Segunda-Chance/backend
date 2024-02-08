@@ -34,8 +34,7 @@ public class UsuarioController {
 	private UsuarioRepository usuarioRepository;
 	
 	@GetMapping("/all")
-	public ResponseEntity <List<Usuario>> getAll(){
-		
+	public ResponseEntity <List<Usuario>> get(){
 		return ResponseEntity.ok(usuarioRepository.findAll());
 		
 	}
@@ -64,7 +63,7 @@ public class UsuarioController {
     
 
 	@PostMapping("/cadastrar")
-	public ResponseEntity<Usuario> postUsuario(@RequestBody @Valid Usuario usuario) {
+	public ResponseEntity<Usuario> post(@RequestBody @Valid Usuario usuario) {
 
 		return usuarioService.cadastrarUsuario(usuario)
 			.map(resposta -> ResponseEntity.status(HttpStatus.CREATED).body(resposta))
@@ -73,7 +72,7 @@ public class UsuarioController {
 	}
 
 	@PutMapping("/atualizar")
-	public ResponseEntity<Usuario> putUsuario(@Valid @RequestBody Usuario usuario) {
+	public ResponseEntity<Usuario> put(@Valid @RequestBody Usuario usuario) {
 		
 		return usuarioService.atualizarUsuario(usuario)
 			.map(resposta -> ResponseEntity.status(HttpStatus.OK).body(resposta))

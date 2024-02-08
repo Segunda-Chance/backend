@@ -14,7 +14,7 @@ import com.generation.segundachance.repository.UsuarioRepository;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Service
-public class ProjectAuthorizationService {
+public class ProductAuthorizationService {
 	
 	@Autowired
 	HttpServletRequest request;
@@ -25,24 +25,11 @@ public class ProjectAuthorizationService {
 	@Autowired
     private ProdutoRepository productRepository;
 	
-	public boolean canDeleteProject(Authentication authentication, Long projectId) {
+	public boolean canDeleteProduct(Authentication authentication, Long productId) {
         
 		String userEmail = (String) request.getAttribute("userName");
 	    Optional<Usuario> user = userRepository.findByUsuario(userEmail);
-	    Optional<Produto> product = productRepository.findById(projectId);
-		
-        if(user.get().getProdutos().contains(product.get()))
-        	return true;
-        else
-        	return false;
-		
-    }
-	
-	public boolean canUpdateProject(Authentication authentication, Long projectId) {
-        
-		String userEmail = (String) request.getAttribute("userName");
-	    Optional<Usuario> user = userRepository.findByUsuario(userEmail);
-	    Optional<Produto> product = productRepository.findById(projectId);
+	    Optional<Produto> product = productRepository.findById(productId);
 		
         if(user.get().getProdutos().contains(product.get()))
         	return true;
