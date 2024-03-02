@@ -35,7 +35,6 @@ public class Produto {
 	@Digits(integer = 6, fraction = 2, message = "O preço deve ter no máximo 8 dígitos, sendo 6 inteiros e 2 decimais.")
 	private BigDecimal preco;
 
-	@NotNull(message = "Insira uma foto!")
 	@Column(length = 300)
 	private String foto;
 

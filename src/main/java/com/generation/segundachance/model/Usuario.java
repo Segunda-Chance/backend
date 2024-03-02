@@ -45,7 +45,7 @@ public class Usuario {
 	@JsonIgnoreProperties("usuario")
 	private List<Produto> produtos;
 	
-
+	@Column(length = 5000)
 	@Size(max = 5000, message = "O link da foto não pode ser maior do que 5000 caracteres")
 	private String foto;
 
@@ -64,7 +64,6 @@ public class Usuario {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
 
 	public String getNomeUsuario() {
 		return nomeUsuario;

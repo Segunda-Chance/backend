@@ -33,18 +33,16 @@ public class UsuarioController {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
-	@GetMapping("/all")
+	@GetMapping
 	public ResponseEntity <List<Usuario>> getAll(){
-		
-		return ResponseEntity.ok(usuarioRepository.findAll());
-		
+		return ResponseEntity.ok(usuarioRepository.findAll());	
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<Usuario> getById(@PathVariable Long id) {
 		return usuarioRepository.findById(id)
 			.map(resposta -> ResponseEntity.ok(resposta))
-			.orElse(ResponseEntity.notFound().build());
+			.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
 	}
 	
 	@GetMapping("/usuario/{usuario}")
@@ -55,7 +53,7 @@ public class UsuarioController {
 	}
 	
 	@PostMapping("/logar")
-	public ResponseEntity<UsuarioLogin> autenticarUsuario(@RequestBody Optional<UsuarioLogin> usuarioLogin){
+	public ResponseEntity<UsuarioLogin> autenticarUsuario(@Valid @RequestBody Optional<UsuarioLogin> usuarioLogin){
 		
 		return usuarioService.autenticarUsuario(usuarioLogin)
 				.map(resposta -> ResponseEntity.status(HttpStatus.OK).body(resposta))
@@ -64,7 +62,7 @@ public class UsuarioController {
     
 
 	@PostMapping("/cadastrar")
-	public ResponseEntity<Usuario> postUsuario(@RequestBody @Valid Usuario usuario) {
+	public ResponseEntity<Usuario> post(@RequestBody @Valid Usuario usuario) {
 
 		return usuarioService.cadastrarUsuario(usuario)
 			.map(resposta -> ResponseEntity.status(HttpStatus.CREATED).body(resposta))
@@ -73,7 +71,7 @@ public class UsuarioController {
 	}
 
 	@PutMapping("/atualizar")
-	public ResponseEntity<Usuario> putUsuario(@Valid @RequestBody Usuario usuario) {
+	public ResponseEntity<Usuario> put(@Valid @RequestBody Usuario usuario) {
 		
 		return usuarioService.atualizarUsuario(usuario)
 			.map(resposta -> ResponseEntity.status(HttpStatus.OK).body(resposta))
