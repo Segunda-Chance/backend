@@ -35,7 +35,8 @@ public class UsuarioController {
 	
 	@GetMapping
 	public ResponseEntity <List<Usuario>> getAll(){
-		return ResponseEntity.ok(usuarioRepository.findAll());	
+		return ResponseEntity.ok(usuarioRepository.findAll());
+		
 	}
 
 	@GetMapping("/{id}")

@@ -14,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 @Entity
 @Table(name = "tb_categorias")
@@ -32,6 +33,9 @@ public class Categoria {
 	@NotBlank(message = "O Atributo tipo é obrigatório!")
 	@Size(min = 5, max = 50, message = "O Atributo tipo deve conter no mínimo 10 e no máximo 50 caracteres.")
 	private String tipo;
+	
+	@Column(length = 500)
+	private String foto;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "categoria", cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties("categoria")
@@ -39,6 +43,14 @@ public class Categoria {
 
 	public Long getId() {
 		return id;
+	}
+
+	public String getFoto() {
+		return foto;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
 	}
 
 	public void setId(Long id) {
