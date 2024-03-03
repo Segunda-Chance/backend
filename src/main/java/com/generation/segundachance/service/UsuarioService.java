@@ -30,9 +30,6 @@ public class UsuarioService {
 	public Optional<Usuario> cadastrarUsuario(Usuario usuario) {
 		if (usuarioRepository.findByUsuario(usuario.getUsuario()).isPresent())
 			return Optional.empty();
-
-		if(usuario.getFoto().isBlank())
-	         usuario.setFoto("https://i.imgur.com/I8MfmC8.png");
 		
 		usuario.setSenha(criptografarSenha(usuario.getSenha()));
 		return Optional.ofNullable(usuarioRepository.save(usuario));
@@ -49,6 +46,7 @@ public class UsuarioService {
 			if (usuario.isPresent()) {
 				usuarioLogin.get().setId(usuario.get().getId());
 				usuarioLogin.get().setNomeUsuario(usuario.get().getNomeUsuario());
+				usuarioLogin.get().setFoto(usuario.get().getFoto());
 				usuarioLogin.get().setSenha("");
 				usuarioLogin.get().setToken(gerarToken(usuarioLogin.get().getUsuario()));
 
