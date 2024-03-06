@@ -1,6 +1,10 @@
 package com.generation.segundachance.service;
 
+import static org.junit.jupiter.api.DynamicTest.stream;
+
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
@@ -37,6 +41,14 @@ public class UsuarioService {
 
 	@Autowired
 	UserMapper userMapper;
+	
+	public List<UserDTO> getAll() {
+		List<Usuario> entityUsers = usuarioRepository.findAll();
+		List<UserDTO> usersDTO = entityUsers.stream()
+									.map(userMapper::toDTO)
+									.collect(Collectors.toList());
+		return usersDTO;
+	}
 	
 	public UserDTO getUserById(@PathVariable Long id) {
 		var userEntity = usuarioRepository.findById(id);

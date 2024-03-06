@@ -40,15 +40,9 @@ public class UsuarioController {
 	@Autowired UsuarioService userService;
 	
 	@GetMapping("/all")
-	public ResponseEntity <List<UserDTO>> get(){
-		
-		List<Usuario> users = usuarioRepository.findAll();
-		
-		List<UserDTO> usersDTO = users.stream()
-				.map(user -> new UserDTO(user.getNomeUsuario(), user.getUsuario(), user.getFoto(), user.getProdutos()))
-				.collect(Collectors.toList());
-		
-		return ResponseEntity.ok(usersDTO);
+	public ResponseEntity <List<UserDTO>> getAll(){
+		List<UserDTO> userDTOs = userService.getAll();
+	    return ResponseEntity.ok(userDTOs);
 		// TODO: create ProdutoDTO to return "user" attribute as the userDTO not the complete user object
 		
 	}
