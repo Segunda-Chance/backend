@@ -25,7 +25,7 @@ public class Categoria {
 	private Long id;
 
 	@Column(length = 80)
-	@NotBlank(message = "O Atributo nome é obrigatório!")
+	@NotBlank(message = "O nome da categoria não pode estar em branco")
 	@Size(min = 5, max = 80, message = "O Atributo nome deve conter no mínimo 5 e no máximo 80 caracteres.")
 	private String nomeCategoria;
 

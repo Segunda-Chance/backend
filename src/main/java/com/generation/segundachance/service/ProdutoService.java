@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.generation.segundachance.exception.usuario.UserNotFoundException;
 import com.generation.segundachance.model.Produto;
 import com.generation.segundachance.model.Usuario;
 import com.generation.segundachance.repository.CategoriaRepository;
@@ -15,7 +16,6 @@ import com.generation.segundachance.repository.ProdutoRepository;
 import com.generation.segundachance.repository.UsuarioRepository;
 import com.generation.segundachance.service.exception.ExcedingProductPropertiesException;
 import com.generation.segundachance.service.exception.InvalidProductPropertiesException;
-import com.generation.segundachance.service.exception.UserNotFoundException;
 
 @Service
 public class ProdutoService {
@@ -32,7 +32,7 @@ public class ProdutoService {
         
         validateProductProperties(product);
         
-        product.setUsuario(user.orElseThrow(() -> new UserNotFoundException()));
+        product.setUsuario(user.orElseThrow(() -> new UserNotFoundException("Usuário não encontrado")));
         
         Produto createdProduct = productRepository.save(product);
         

@@ -1,7 +1,9 @@
 package com.generation.segundachance.controller;
 
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,17 +17,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.generation.segundachance.dto.UserDTO;
+import com.generation.segundachance.dto.UserLoginDTO;
 import com.generation.segundachance.model.Usuario;
 import com.generation.segundachance.model.UsuarioLogin;
 import com.generation.segundachance.repository.UsuarioRepository;
 import com.generation.segundachance.service.UsuarioService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/usuarios")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-
 public class UsuarioController {
 	@Autowired
 	private UsuarioService usuarioService;
@@ -33,50 +37,52 @@ public class UsuarioController {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
-	@GetMapping
-	public ResponseEntity <List<Usuario>> getAll(){
-		return ResponseEntity.ok(usuarioRepository.findAll());
+	@Autowired UsuarioService userService;
+	
+	@GetMapping("/all")
+	public ResponseEntity <List<UserDTO>> get(){
+		
+		List<Usuario> users = usuarioRepository.findAll();
+		
+		List<UserDTO> usersDTO = users.stream()
+				.map(user -> new UserDTO(user.getNomeUsuario(), user.getUsuario(), user.getFoto(), user.getProdutos()))
+				.collect(Collectors.toList());
+		
+		return ResponseEntity.ok(usersDTO);
+		// TODO: create ProdutoDTO to return "user" attribute as the userDTO not the complete user object
 		
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Usuario> getById(@PathVariable Long id) {
-		return usuarioRepository.findById(id)
-			.map(resposta -> ResponseEntity.ok(resposta))
-			.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+	public ResponseEntity<UserDTO> getById(@PathVariable Long id) {
+		UserDTO userDTO = userService.getUserById(id);
+		return ResponseEntity.status(HttpStatus.OK).body(userDTO);
 	}
 	
 	@GetMapping("/usuario/{usuario}")
-	public ResponseEntity<Usuario> getByUsuario(@PathVariable String usuario) {
-		return usuarioRepository.findByUsuario(usuario)
-			.map(resposta -> ResponseEntity.ok(resposta))
-			.orElse(ResponseEntity.notFound().build());
+	public ResponseEntity<UserDTO> getByUsuario(@PathVariable String usuario) {
+		UserDTO userDTO = userService.getUserByUsername(usuario);
+		return ResponseEntity.status(HttpStatus.OK).body(userDTO);
 	}
 	
 	@PostMapping("/logar")
-	public ResponseEntity<UsuarioLogin> autenticarUsuario(@Valid @RequestBody Optional<UsuarioLogin> usuarioLogin){
-		
-		return usuarioService.autenticarUsuario(usuarioLogin)
-				.map(resposta -> ResponseEntity.status(HttpStatus.OK).body(resposta))
-				.orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
+	public ResponseEntity<UserLoginDTO> autenticarUsuario(@RequestBody Optional<UsuarioLogin> usuarioLogin){
+		UserLoginDTO userDTO = usuarioService.authenticateUser(usuarioLogin);
+		return ResponseEntity.status(HttpStatus.OK).body(userDTO);
+		// return a DTO, to protect sensitive information of the User as the Id and password
 	}
-    
 
 	@PostMapping("/cadastrar")
-	public ResponseEntity<Usuario> post(@RequestBody @Valid Usuario usuario) {
-
-		return usuarioService.cadastrarUsuario(usuario)
-			.map(resposta -> ResponseEntity.status(HttpStatus.CREATED).body(resposta))
-			.orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
-
+	public ResponseEntity<UserDTO> post(@RequestBody @Valid Usuario usuario) {
+		UserDTO userDTO = userService.registerUser(usuario);
+		return ResponseEntity.status(HttpStatus.CREATED).body(userDTO);
+		// return a DTO, to protect sensitive information of the User as the Id and password
 	}
-
+	
 	@PutMapping("/atualizar")
-	public ResponseEntity<Usuario> put(@Valid @RequestBody Usuario usuario) {
-		
-		return usuarioService.atualizarUsuario(usuario)
-			.map(resposta -> ResponseEntity.status(HttpStatus.OK).body(resposta))
-			.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
-		
+	public ResponseEntity<UserDTO> put(@Valid @RequestBody Usuario usuario, HttpServletRequest request) {
+		UserDTO userDTO = userService.updateUser(usuario, request);
+		return ResponseEntity.status(HttpStatus.OK).body(userDTO);
+		// return a DTO, to protect sensitive information of the User as the Id and password
 	}
 }

@@ -27,13 +27,13 @@ public class Usuario {
 
 	@Column(length = 30)
 	@NotBlank(message = "O Atributo nome é obrigatório!")
-	@Size(min = 5, max = 30, message = "O Atributo nome deve conter no mínimo 5 e no máximo 30 caracteres.")
+	@Size(min = 5, max = 30, message = "O Nome deve ter entre 5 e 30 caracteres.")
 	private String nomeUsuario;
 
 	@Column(length = 50)
 	@Schema(example = "email@email.com.br")
 	@NotBlank(message = "O Atributo usuario é obrigatório!")
-	@Size(min = 5, max = 50, message = "O Atributo usuario deve conter no mínimo 5 e no máximo 50 caracteres.")
+	@Size(min = 5, max = 50, message = "O e-mail deve ter entre 5 e 50 caracteres.")
 	private String usuario;
 
 	@Column(length = 255)
