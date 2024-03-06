@@ -1,7 +1,5 @@
 package com.generation.segundachance.service;
 
-import static org.junit.jupiter.api.DynamicTest.stream;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -41,22 +39,20 @@ public class UsuarioService {
 
 	@Autowired
 	UserMapper userMapper;
-	
+
 	public List<UserDTO> getAll() {
 		List<Usuario> entityUsers = usuarioRepository.findAll();
-		List<UserDTO> usersDTO = entityUsers.stream()
-									.map(userMapper::toDTO)
-									.collect(Collectors.toList());
+		List<UserDTO> usersDTO = entityUsers.stream().map(userMapper::toDTO).collect(Collectors.toList());
 		return usersDTO;
 	}
-	
+
 	public UserDTO getUserById(@PathVariable Long id) {
 		var userEntity = usuarioRepository.findById(id);
 		if (userEntity.isEmpty())
 			throw new UserNotFoundException("Id não encontrado");
 		return userMapper.toDTO(userEntity.get());
 	}
-	
+
 	public UserDTO getUserByUsername(@PathVariable String username) {
 		var userEntity = usuarioRepository.findByUsuario(username);
 		if (userEntity.isEmpty())
@@ -83,7 +79,7 @@ public class UsuarioService {
 		return userMapper.toDTO(createdUser);
 	}
 
-  public UserLoginDTO authenticateUser(Optional<UsuarioLogin> usuarioLogin) {
+	public UserLoginDTO authenticateUser(Optional<UsuarioLogin> usuarioLogin) {
 		// search for user data
 		Optional<Usuario> user = usuarioRepository.findByUsuario(usuarioLogin.get().getUsuario());
 
@@ -133,45 +129,46 @@ public class UsuarioService {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		return encoder.encode(senha);
 	}
-	
+
 	public UserDTO updateUser(Usuario usuario, HttpServletRequest request) {
-	    String userEmail = (String) request.getAttribute("userName");
-	    Optional<Usuario> requestingUser = usuarioRepository.findByUsuario(userEmail);
-	    Optional<Usuario> existingUser = usuarioRepository.findById(usuario.getId());
+		String userEmail = (String) request.getAttribute("userName");
+		Optional<Usuario> requestingUser = usuarioRepository.findByUsuario(userEmail);
+		Optional<Usuario> existingUser = usuarioRepository.findById(usuario.getId());
 
-	    // check if the user exists
-	    if (!existingUser.isPresent()) {
-	        throw new UserNotFoundException("Usuário não encontrado.");
-	    }
+		// check if the user exists
+		if (!existingUser.isPresent()) {
+			throw new UserNotFoundException("Usuário não encontrado.");
+		}
 
-	    // check if the ID from user present on the request header
-	    // is the same ID of the user trying to be updated
-	    if (existingUser.get().getId() != requestingUser.get().getId()) {
-	        throw new AccessDeniedException("Você não tem permissão para realizar esta ação.");
-	    }
+		// check if the ID from user present on the request header
+		// is the same ID of the user trying to be updated
+		if (existingUser.get().getId() != requestingUser.get().getId()) {
+			throw new AccessDeniedException("Você não tem permissão para realizar esta ação.");
+		}
 
-	    Optional<Usuario> existingUsername = usuarioRepository.findByUsuario(usuario.getUsuario());
+		Optional<Usuario> existingUsername = usuarioRepository.findByUsuario(usuario.getUsuario());
 
-	    // check if a user with the same username already exists in the database
-	    // and throws a custom exception if it does
-	    if ((existingUsername.isPresent()) && (existingUsername.get().getId() != usuario.getId())) {
-	        throw new UserAlreadyExistsException("O usuário informado já existe");
-	    }
+		// check if a user with the same username already exists in the database
+		// and throws a custom exception if it does
+		if ((existingUsername.isPresent()) && (existingUsername.get().getId() != usuario.getId())) {
+			throw new UserAlreadyExistsException("O usuário informado já existe");
+		}
 
-	    // updates user photo if it is null
-	    if (usuario.getFoto().isBlank()) {
-	        usuario.setFoto("https://i.imgur.com/I8MfmC8.png");
-	    }
+		// updates user photo if it is null
+		if (usuario.getFoto().isBlank()) {
+			usuario.setFoto("https://i.imgur.com/I8MfmC8.png");
+		}
 
-	    // encrypts password before persists object on DB
-	    usuario.setSenha(criptografarSenha(usuario.getSenha()));
+		// encrypts password before persists object on DB
+		usuario.setSenha(criptografarSenha(usuario.getSenha()));
 
-	    // update user products
-	    usuario.setProdutos(existingUser.get().getProdutos());
+		// update user products
+		usuario.setProdutos(existingUser.get().getProdutos());
 
-	    // persists update object on DB
-	    var updatedUser = usuarioRepository.save(usuario);
+		// persists update object on DB
+		var updatedUser = usuarioRepository.save(usuario);
 
-	    // maps to DTO
-	    return userMapper.toDTO(updatedUser);
+		// maps to DTO
+		return userMapper.toDTO(updatedUser);
 	}
+}
