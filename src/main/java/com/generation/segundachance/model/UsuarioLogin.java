@@ -10,7 +10,7 @@ public class UsuarioLogin {
 	private String foto;
 
 	public String getFoto() {
-		return foto;
+		return this.foto;
 	}
 
 	public void setFoto(String foto) {

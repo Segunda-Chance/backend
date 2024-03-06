@@ -71,7 +71,7 @@ public class UsuarioService {
 		return userMapper.toDTO(createdUser);
 	}
 
-	public UserLoginDTO authenticateUser(Optional<UsuarioLogin> usuarioLogin) {
+  public UserLoginDTO authenticateUser(Optional<UsuarioLogin> usuarioLogin) {
 		// search for user data
 		Optional<Usuario> user = usuarioRepository.findByUsuario(usuarioLogin.get().getUsuario());
 
@@ -163,5 +163,3 @@ public class UsuarioService {
 	    // maps to DTO
 	    return userMapper.toDTO(updatedUser);
 	}
-
-}

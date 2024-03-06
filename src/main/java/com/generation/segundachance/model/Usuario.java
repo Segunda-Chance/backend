@@ -41,16 +41,25 @@ public class Usuario {
 	@Size(min = 8, max = 255, message = "O Atributo senha deve conter no mínimo 8.")
 	private String senha;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario", cascade = CascadeType.REMOVE)
-	@JsonIgnoreProperties("usuario")
-	private List<Produto> produtos;
-	
 	@Column(length = 5000)
 	@Size(max = 5000, message = "O link da foto não pode ser maior do que 5000 caracteres")
 	private String foto;
 
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario", cascade = CascadeType.REMOVE)
+	@JsonIgnoreProperties("usuario")
+	private List<Produto> produtos;
+	
+	public Usuario(Long id, String nomeUsuario, String usuario, String senha, String foto) {
+		this.id = id;
+		this.nomeUsuario = nomeUsuario;
+		this.usuario = usuario;
+		this.senha = senha;
+		this.foto = foto;
+	}
+	public Usuario() {}
+
 	public String getFoto() {
-		return foto;
+		return this.foto;
 	}
 
 	public void setFoto(String foto) {
@@ -58,7 +67,7 @@ public class Usuario {
 	}
 
 	public Long getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(Long id) {
@@ -66,7 +75,7 @@ public class Usuario {
 	}
 
 	public String getNomeUsuario() {
-		return nomeUsuario;
+		return this.nomeUsuario;
 	}
 
 	public void setNomeUsuario(String nomeUsuario) {
@@ -74,7 +83,7 @@ public class Usuario {
 	}
 
 	public String getUsuario() {
-		return usuario;
+		return this.usuario;
 	}
 
 	public void setUsuario(String usuario) {
@@ -82,7 +91,7 @@ public class Usuario {
 	}
 
 	public String getSenha() {
-		return senha;
+		return this.senha;
 	}
 
 	public void setSenha(String senha) {
@@ -90,7 +99,7 @@ public class Usuario {
 	}
 
 	public List<Produto> getProdutos() {
-		return produtos;
+		return this.produtos;
 	}
 
 	public void setProdutos(List<Produto> produtos) {
